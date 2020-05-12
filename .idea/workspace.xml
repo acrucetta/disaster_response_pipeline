@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9f36097-ded9-4e3f-8e7b-ad050151feb1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Pipeline Preparation-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pipeline Preparation.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/ETL Pipeline Preparation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/ETL Pipeline Preparation-checkpoint.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ETL Pipeline Preparation.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ML Pipeline Preparation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ML Pipeline Preparation.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/process_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/process_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/train_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/train_classifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
