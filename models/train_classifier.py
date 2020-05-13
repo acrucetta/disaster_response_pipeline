@@ -1,5 +1,4 @@
 import re
-import numpy as np
 import pandas as pd
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -8,19 +7,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.datasets import make_multilabel_classification
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import classification_report
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import plot_roc_curve
 from sklearn.ensemble import RandomForestClassifier
 import pickle
-
+import sys
+from sqlalchemy import create_engine
 import nltk
-nltk.download(['punkt', 'wordnet','stopwords'])
+nltk.download(['punkt', 'wordnet','stopwords','averaged_perceptron_tagger'])
 from nltk.corpus import stopwords
+from sklearn.model_selection import GridSearchCV
 
 
 def load_data(database_filepath):
@@ -35,11 +31,11 @@ def load_data(database_filepath):
     y: dataframe. Contains the labels (categories) data.
     category_names: List of strings. Contains the labels names.
     """
-
-    df = pd.read_sql_table(database_filepath, engine)
+    engine = create_engine('sqlite:///{}'.format(database_filepath))
+    df = pd.read_sql_table('messages_cat', engine)
     X = df['message']
     y = df.drop(['message', 'genre', 'id', 'original'], axis=1)
-    y.drop(columns=["related", "other_infrastructure", "other_weather", "other_aid", "direct_report", "weather_related"])
+    y = y.drop(columns=["related", "other_infrastructure", "other_weather", "other_aid", "direct_report", "weather_related"])
     category_names = y.columns.tolist()
     return X, y, category_names
 
@@ -104,9 +100,15 @@ def build_model():
                 ])),
                 ('starting_verb', StartVerbExtractor())
             ])),
-            ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators=100)))
+            ('clf', MultiOutputClassifier(RandomForestClassifier()))
         ])
-    return pipeline
+
+    parameters = {'clf__estimator__n_estimators': [100, 200],
+    'clf__estimator__random_state': [42]}
+
+    cv = GridSearchCV(pipeline, param_grid = parameters, refit = True, verbose = 1, return_train_score = True, n_jobs = 2)
+
+    return cv
 
 def evaluate_model(model, X_test, y_test, category_names):
     """
