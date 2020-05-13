@@ -21,17 +21,39 @@ import pickle
 import nltk
 nltk.download(['punkt', 'wordnet','stopwords'])
 from nltk.corpus import stopwords
-from sklearn.externals import joblib
 
 
 def load_data(database_filepath):
+    """
+    Load the data
+
+    Inputs:
+    database_filepath: String. Filepath for the db file containing the cleaned data.
+
+    Output:
+    X: dataframe. Contains the feature data.
+    y: dataframe. Contains the labels (categories) data.
+    category_names: List of strings. Contains the labels names.
+    """
+
     df = pd.read_sql_table(database_filepath, engine)
     X = df['message']
-    y = df.iloc[:, 4:40]
-    X_train, X_test, y_train, y_test = train_test_split(X, y)
-    return X_train, X_test, y_train, y_test
+    y = df.drop(['message', 'genre', 'id', 'original'], axis=1)
+    y.drop(columns=["related", "other_infrastructure", "other_weather", "other_aid", "direct_report", "weather_related"])
+    category_names = y.columns.tolist()
+    return X, y, category_names
 
 def tokenize(text):
+    """
+    Normalize, tokenize and stems texts.
+
+    Input:
+    text: string. Sentence containing a message.
+
+    Output:
+    stemmed_tokens: list of strings. A list of strings containing normalized and stemmed tokens.
+    """
+
     # creating stop words
     stop_words = set(stopwords.words("english"))
 
@@ -48,39 +70,62 @@ def tokenize(text):
     return tokens
 
 
+class StartVerbExtractor(BaseEstimator, TransformerMixin):
+    def start_verb(self, text):
+        sentence_list = nltk.sent_tokenize(text)
+        for sentence in sentence_list:
+            pos_tags = nltk.pos_tag(tokenize(sentence))
+            if len(pos_tags) != 0:
+                first_word, first_tag = pos_tags[0]
+                if first_tag in ['VB', 'VBP'] or first_word == 'RT':
+                    return 1
+        return 0
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        X_tag = pd.Series(X).apply(self.start_verb)
+        return pd.DataFrame(X_tag)
+
 def build_model():
-        pipeline = Pipeline([
-            ('text_pipeline', Pipeline([
-                ('vect', CountVectorizer(tokenizer=tokenize)),
-                ('tfidf', TfidfTransformer())])),
-            ('clf', MultiOutputClassifier(RandomForestClassifier()))
+    """
+    Builds a ML pipeline and performs gridsearch.
+    Args:
+    None
+    Returns:
+    cv: gridsearchcv object.
+    """
+    pipeline = Pipeline([
+            ('features', FeatureUnion([
+                ('text_pipeline', Pipeline([
+                    ('vect', CountVectorizer(tokenizer=tokenize)),
+                    ('tfidf', TfidfTransformer())
+                ])),
+                ('starting_verb', StartVerbExtractor())
+            ])),
+            ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators=100)))
         ])
+    return pipeline
 
-        parameters = {
-            'clf__estimator__max_depth': [2, 5],
-            'clf__estimator__n_estimators': [50, 100]
-        }
-        cv = GridSearchCV(pipeline, param_grid=parameters)
-        return cv
+def evaluate_model(model, X_test, y_test, category_names):
+    """
+    Returns test accuracy, number of 1s and 0s, recall, precision and F1 Score.
 
+    Inputs:
+    model: model object. Instanciated model.
+    X_test: pandas dataframe containing test features.
+    y_test: pandas dataframe containing test labels.
+    category_names: list of strings containing category names.
 
-def evaluate_model(model, X_test, Y_test, category_names):
-    model = build_model()
-    model.fit(X_test, Y_test)
-
+    Returns:
+    None
+    """
     y_pred = model.predict(X_test)
-    for i in category_names:
-        n = 0
-        print(i)
-        print('Random Forest with Grid Search')
-        print(classification_report(Y_test[i], y_pred[:, n], labels=[0, 1]))
-        n += 1
-
-    return y_pred
+    print(classification_report(y_test, y_pred, target_names=category_names))
 
 def save_model(model, model_filepath):
-    joblib.dump(model, model_filepath)
-
+    pickle.dump(model.best_estimator_, open(model_filepath, 'wb'))
 
 def main():
     if len(sys.argv) == 3:
