@@ -10,6 +10,29 @@ from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
+<<<<<<< HEAD
+from sklearn.base import BaseEstimator, TransformerMixin
+import numpy as np
+nltk.download(['punkt', 'wordnet','stopwords','averaged_perceptron_tagger'])
+
+app = Flask(__name__)
+
+class StartVerbExtractor(BaseEstimator, TransformerMixin):
+    """
+    Creates feature based on verb presence in text
+    """
+
+    def start_verb(self, text):
+        sentence_list = nltk.sent_tokenize(text)
+        for sentence in sentence_list:
+            pos_tags = nltk.pos_tag(tokenize(sentence))
+            if len(pos_tags) != 0:
+                first_word, first_tag = pos_tags[0]
+                if first_tag in ['VB', 'VBP'] or first_word == 'RT':
+                    return 1
+        return 0
+=======
+>>>>>>> parent of c765ee9... Updated HTML file
 
 
 app = Flask(__name__)
@@ -36,22 +59,28 @@ model = joblib.load("../models/classifier.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
+
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    category_df = df.drop(columns=['id', 'message', 'genre'])
+    category_sums = pd.DataFrame(np.sum(category_df), columns=["count"]).sort_values(['count'], ascending=False)
 
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
                 Bar(
+<<<<<<< HEAD
+                    x=genre_counts,
+                    y=genre_names,
+                    orientation = 'h'
+=======
                     x=genre_names,
                     y=genre_counts
+>>>>>>> parent of c765ee9... Updated HTML file
                 )
             ],
-
             'layout': {
                 'title': 'Distribution of Message Genres',
                 'yaxis': {
@@ -61,9 +90,27 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+        {
+            'data': [
+                    Bar(
+                        y= category_sums.index,
+                        x=category_sums['count'],
+                        orientation = 'h'
+                    )
+                ],
+            'layout': {
+                'title': "Distribution of Message Types",
+                "xaxis": {
+                    'title':'Count'
+                },
+                'yaxis': {
+                    'title':'Message Type'
+                }
+            }
         }
     ]
-    
+
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)

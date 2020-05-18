@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9f36097-ded9-4e3f-8e7b-ad050151feb1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/noun_disaster_3239360.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/noun_disaster_3239360.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/Pipeline Preparation.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/classifier.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/disaster_response.db" beforeDir="false" afterPath="$PROJECT_DIR$/disaster_response.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/train_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/train_classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/go.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/go.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/master.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/master.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/disaster_categories.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/ETL Pipeline Preparation.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
