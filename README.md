@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Disaster Response Pipeline
 ### ETL & NLP Pipeline
 In this project, I'm analyzing disaster data from Figure Eight to build a model for an API that classifies disaster messages
@@ -52,13 +51,8 @@ python run.py
 Go to http://0.0.0.0:3001/
 
 Notebooks
-ETL Pipeline Prep.ipynb - jupyter notebook for data exploration and cleaning
-ML Pipeline Preparation - jupyter notebook for model selection and evaluation
+Pipeline Preparation.ipynb - jupyter notebook for data exploration, cleaning, and model exploration
 
 ## 7. Licensing, Authors, Acknowledgements<a name="licensing"></a>
 - Author: Andres Crucetta
 - Acknowledgements: Udacity
-=======
-# disaster_response_pipeline
-In this project, I'm anallyzing disaster data from Figure Eight to build a model for an API that classifies disaster messages
->>>>>>> parent of c765ee9... Updated HTML file
