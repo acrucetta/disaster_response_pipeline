@@ -10,7 +10,7 @@ from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
-<<<<<<< HEAD
+
 from sklearn.base import BaseEstimator, TransformerMixin
 import numpy as np
 nltk.download(['punkt', 'wordnet','stopwords','averaged_perceptron_tagger'])
@@ -31,9 +31,6 @@ class StartVerbExtractor(BaseEstimator, TransformerMixin):
                 if first_tag in ['VB', 'VBP'] or first_word == 'RT':
                     return 1
         return 0
-=======
->>>>>>> parent of c765ee9... Updated HTML file
-
 
 app = Flask(__name__)
 
@@ -71,14 +68,9 @@ def index():
         {
             'data': [
                 Bar(
-<<<<<<< HEAD
                     x=genre_counts,
                     y=genre_names,
                     orientation = 'h'
-=======
-                    x=genre_names,
-                    y=genre_counts
->>>>>>> parent of c765ee9... Updated HTML file
                 )
             ],
             'layout': {
