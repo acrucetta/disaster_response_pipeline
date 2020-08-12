@@ -69,13 +69,13 @@ Running [this command](#com) **from app directory** will start the web app where
 
 **_Screenshot 1_**
 
-![master](img/master.jpg)
+![master](images/master.jpg)
 
 What the app will do is that it will classify the text message into categories so that appropriate relief agency can be reached out for help.
 
 **_Screenshot 2_**
 
-![results](img/res.jpg)
+![results](images/res.jpg)
 
 <a id='run'></a>
 
@@ -99,7 +99,7 @@ _DisasterResponse.db_ already exists in _data_ folder but the above command will
 
 **_Screenshot 3_**
 
-![process_data](img/process_data.jpg)
+![process_data](images/process_data.jpg)
 
 <a id='training'></a>
 
@@ -117,7 +117,7 @@ _classifier.pkl_ already exists but the above command will still run and replace
 
 _**Screenshot 4**_
 
-![train_classifier_1](img/train_classifier_1.jpg)
+![train_classifier_1](images/train_classifier_1.jpg)
 
 It took me around **4 minutes** to train the classifier with grid search.
 
@@ -127,7 +127,7 @@ When the models is saved, it will look something like this.
 
 **_Screenshot 5_**
 
-![train_classifier_2.jpg](img/train_classifier_2.jpg)
+![train_classifier_2.jpg](images/train_classifier_2.jpg)
 
 <a id='starting'></a>
 
@@ -147,7 +147,7 @@ This will start the web app and will direct you to a URL where you can enter mes
 
 **_Screenshot 6_**
 
-![web_app](img/web_app.jpg)
+![web_app](images/web_app.jpg)
 
 <a id='conclusion'></a>
 
@@ -157,11 +157,11 @@ Some information about training data set as seen on the main page of the web app
 
 **_Screenshot 7_**
 
-![genre](img/genre.jpg)
+![genre](images/genre.jpg)
 
 **_Screenshot 8_**
 
-![dist](img/dist.jpg)
+![dist](images/dist.jpg)
 
 As we can see the data is highly imbalanced. Though the accuracy metric is [high](#acc) (you will see the exact value after the model is trained by grid search, it is ~0.94), it has a poor value for recall (~0.6). So, take appropriate measures when using this model for decision-making process at a larger scale or in a production environment.
 
@@ -183,7 +183,7 @@ As we can see the data is highly imbalanced. Though the accuracy metric is [high
 │   ├── disaster_categories.csv-------# DATA TO PROCESS
 │   ├── disaster_messages.csv---------# DATA TO PROCESS
 │   └── process_data.py---------------# PERFORMS ETL PROCESS
-├── img-------------------------------# PLOTS FOR USE IN README AND THE WEB APP
+├── images-------------------------------# PLOTS FOR USE IN README AND THE WEB APP
 ├── models
 │   └── train_classifier.py-----------# PERFORMS CLASSIFICATION TASK
 
